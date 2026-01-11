@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useMetronome } from '../contexts/MetronomeContext';
 import { useMetronomeAudio } from '../hooks/useMetronomeAudio';
 import { Header } from './Header';
 import { BPNDisplay } from './BPNDisplay';
@@ -40,9 +41,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 40,
+    paddingVertical: 20,
   },
   controlsSection: {
     padding: 20,
+    paddingBottom: 40,
   },
 });

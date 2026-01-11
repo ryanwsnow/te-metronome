@@ -1,52 +1,74 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { useMetronome } from '../contexts/MetronomeContext';
-import { TIME_SIGNATURES } from '../types';
 
 export const TimingControls = () => {
   const { timeSignature, setTimeSignature } = useMetronome();
+  const signatures = ['4/4', '3/4', '6/8'];
 
   return (
     <View style={styles.container}>
-      {TIME_SIGNATURES.map((sig) => (
-        <TouchableOpacity
-          key={sig}
-          style={[
-            styles.button,
-            timeSignature === sig && styles.buttonActive,
-          ]}
-          onPress={() => setTimeSignature(sig)}
-        >
-          <Text style={styles.buttonText}>{sig}</Text>
-        </TouchableOpacity>
-      ))}
+      <Text style={styles.label}>Time Signature</Text>
+      <View style={styles.buttons}>
+        {signatures.map((sig) => (
+          <TouchableOpacity
+            key={sig}
+            style={[
+              styles.button,
+              timeSignature === sig && styles.buttonActive,
+            ]}
+            onPress={() => setTimeSignature(sig)}
+            activeOpacity={0.7}
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                timeSignature === sig && styles.buttonTextActive,
+              ]}
+            >
+              {sig}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
     marginVertical: 15,
   },
+  label: {
+    color: '#fff',
+    fontSize: 14,
+    marginBottom: 10,
+    fontWeight: '600',
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
   button: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    flex: 1,
+    padding: 15,
     borderRadius: 8,
-    backgroundColor: '#333',
-    minWidth: 80,
+    backgroundColor: '#1a1a1a',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: '#555',
+    borderColor: '#333',
   },
   buttonActive: {
     backgroundColor: '#007AFF',
     borderColor: '#007AFF',
   },
   buttonText: {
-    color: '#fff',
+    color: '#888',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  buttonTextActive: {
+    color: '#fff',
   },
 });

@@ -10,6 +10,7 @@ export const PlayButton = () => {
       <TouchableOpacity
         style={[styles.button, isPlaying && styles.buttonPlaying]}
         onPress={togglePlay}
+        activeOpacity={0.8}
       >
         <Text style={styles.buttonText}>
           {isPlaying ? 'Pause' : 'Play'}
@@ -21,23 +22,23 @@ export const PlayButton = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
-    marginBottom: 10,
+    marginVertical: 20,
+    alignItems: 'center',
   },
   button: {
     backgroundColor: '#007AFF',
-    paddingVertical: 16,
-    paddingHorizontal: 32,
-    borderRadius: 12,
+    paddingHorizontal: 40,
+    paddingVertical: 15,
+    borderRadius: 25,
+    minWidth: 120,
     alignItems: 'center',
-    justifyContent: 'center',
   },
   buttonPlaying: {
     backgroundColor: '#FF3B30',
   },
   buttonText: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

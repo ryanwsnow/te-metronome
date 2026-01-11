@@ -1,22 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
-import { SvgXml } from 'react-native-svg';
-import HeaderTitleSvg from '../../assets/svgs/header title.svg';
-import HeaderSubtitleSvg from '../../assets/svgs/header subtitle.svg';
-import HeaderSpeakerSvg from '../../assets/svgs/header-speaker.svg';
-import InsetSvg from '../../assets/svgs/inset.svg';
+import { View, StyleSheet } from 'react-native';
+import Svg, { G, Path } from 'react-native-svg';
 
 export const Header = () => {
+  // Placeholder header - will integrate SVG assets
   return (
     <View style={styles.container}>
       <View style={styles.headerContent}>
-        <View style={styles.titleSection}>
-          {/* SVG assets will be rendered here */}
-          <View style={styles.placeholder} />
-        </View>
-        <View style={styles.speakerSection}>
-          <View style={styles.placeholder} />
-        </View>
+        {/* Header SVG assets will be integrated here */}
+        <View style={styles.placeholder} />
       </View>
     </View>
   );
@@ -30,19 +22,13 @@ const styles = StyleSheet.create({
   },
   headerContent: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  titleSection: {
-    flex: 1,
-  },
-  speakerSection: {
-    width: 60,
-    height: 60,
+    justifyContent: 'center',
   },
   placeholder: {
-    height: 40,
-    backgroundColor: '#333',
-    borderRadius: 4,
+    height: 60,
+    width: '100%',
+    backgroundColor: '#1a1a1a',
+    borderRadius: 8,
   },
 });

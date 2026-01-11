@@ -1,28 +1,28 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useMetronome } from '../contexts/MetronomeContext';
-import SvgUri from 'react-native-svg-uri';
-import BpmIndicatorBackground from '../../assets/svgs/bpm-indicator-background.svg';
+import { SvgXml } from 'react-native-svg';
+import * as FileSystem from 'expo-file-system';
 
+// We'll use a simple background for now, or load the SVG
 export const BPNDisplay = () => {
   const { bpm } = useMetronome();
 
   return (
     <View style={styles.container}>
       <View style={styles.backgroundContainer}>
-        <BpmIndicatorBackground width="100%" height="100%" />
+        {/* BPM indicator background SVG placeholder */}
+        <View style={styles.background} />
       </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.bpmText}>{Math.round(bpm)}</Text>
-      </View>
+      <Text style={styles.bpmText}>{Math.round(bpm)}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: 250,
-    height: 120,
+    width: 200,
+    height: 100,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
@@ -35,18 +35,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  textContainer: {
-    position: 'absolute',
+  background: {
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#333',
   },
   bpmText: {
     fontSize: 64,
     fontWeight: 'bold',
     color: '#fff',
     fontFamily: 'DigitalNumbers_400Regular',
+    zIndex: 1,
   },
 });

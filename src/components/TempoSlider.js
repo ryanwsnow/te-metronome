@@ -2,7 +2,6 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { useMetronome } from '../contexts/MetronomeContext';
-import { MIN_BPM, MAX_BPM } from '../types';
 
 export const TempoSlider = () => {
   const { bpm, setBpm } = useMetronome();
@@ -12,14 +11,18 @@ export const TempoSlider = () => {
       <Text style={styles.label}>Tempo (BPM): {Math.round(bpm)}</Text>
       <Slider
         style={styles.slider}
-        minimumValue={MIN_BPM}
-        maximumValue={MAX_BPM}
+        minimumValue={30}
+        maximumValue={300}
         value={bpm}
         onValueChange={setBpm}
         minimumTrackTintColor="#007AFF"
         maximumTrackTintColor="#333"
         thumbTintColor="#007AFF"
       />
+      <View style={styles.range}>
+        <Text style={styles.rangeText}>30</Text>
+        <Text style={styles.rangeText}>300</Text>
+      </View>
     </View>
   );
 };
@@ -30,12 +33,21 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     marginBottom: 10,
     fontWeight: '600',
   },
   slider: {
     width: '100%',
     height: 40,
+  },
+  range: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 5,
+  },
+  rangeText: {
+    color: '#888',
+    fontSize: 12,
   },
 });

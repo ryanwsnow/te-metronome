@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useMetronome } from '../contexts/MetronomeContext';
-import { SUBDIVISIONS } from '../types';
 
 export const SubdivisionControl = () => {
   const { subdivision, setSubdivision } = useMetronome();
+  const subdivisions = ['1/4', '1/8', '1/16'];
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Subdivision</Text>
       <View style={styles.controls}>
-        {SUBDIVISIONS.map((sub) => (
+        {subdivisions.map((sub) => (
           <TouchableOpacity
             key={sub}
             style={[
@@ -18,8 +18,16 @@ export const SubdivisionControl = () => {
               subdivision === sub && styles.optionActive,
             ]}
             onPress={() => setSubdivision(sub)}
+            activeOpacity={0.7}
           >
-            <Text style={styles.optionText}>{sub}</Text>
+            <Text
+              style={[
+                styles.optionText,
+                subdivision === sub && styles.optionTextActive,
+              ]}
+            >
+              {sub}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -33,31 +41,34 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     marginBottom: 10,
     fontWeight: '600',
   },
   controls: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    gap: 10,
   },
   option: {
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    flex: 1,
+    padding: 15,
     borderRadius: 8,
-    backgroundColor: '#333',
-    minWidth: 70,
+    backgroundColor: '#1a1a1a',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: '#555',
+    borderColor: '#333',
   },
   optionActive: {
     backgroundColor: '#007AFF',
     borderColor: '#007AFF',
   },
   optionText: {
-    color: '#fff',
+    color: '#888',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '600',
+  },
+  optionTextActive: {
+    color: '#fff',
   },
 });

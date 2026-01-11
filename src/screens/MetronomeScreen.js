@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useFonts, DigitalNumbers_400Regular } from '@expo-google-fonts/digital-numbers';
+import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { MetronomeProvider } from '../contexts/MetronomeContext';
+import {
+  DigitalNumbers_400Regular,
+} from '@expo-google-fonts/digital-numbers';
 import { MetronomeContent } from '../components/MetronomeContent';
 
 SplashScreen.preventAutoHideAsync();
@@ -23,11 +25,9 @@ export const MetronomeScreen = () => {
   }
 
   return (
-    <MetronomeProvider>
-      <View style={styles.container}>
-        <MetronomeContent />
-      </View>
-    </MetronomeProvider>
+    <View style={styles.container}>
+      <MetronomeContent />
+    </View>
   );
 };
 

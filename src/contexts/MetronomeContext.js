@@ -1,33 +1,32 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
-import { DEFAULT_BPM, MIN_BPM, MAX_BPM, DEFAULT_VOLUME, MIN_VOLUME, MAX_VOLUME } from '../types';
 
 const MetronomeContext = createContext(undefined);
 
 export const MetronomeProvider = ({ children }) => {
-  const [bpm, setBpmState] = useState(DEFAULT_BPM);
+  const [bpm, setBpmState] = useState(120);
   const [timeSignature, setTimeSignatureState] = useState('4/4');
   const [subdivision, setSubdivisionState] = useState('1/4');
-  const [volume, setVolumeState] = useState(DEFAULT_VOLUME);
+  const [volume, setVolumeState] = useState(100);
   const [isPlaying, setIsPlayingState] = useState(false);
 
   const setBpm = useCallback((newBpm) => {
-    setBpmState(Math.max(MIN_BPM, Math.min(MAX_BPM, newBpm)));
+    setBpmState(Math.max(30, Math.min(300, newBpm)));
   }, []);
 
-  const setTimeSignature = useCallback((newTimeSignature) => {
-    setTimeSignatureState(newTimeSignature);
+  const setTimeSignature = useCallback((sig) => {
+    setTimeSignatureState(sig);
   }, []);
 
-  const setSubdivision = useCallback((newSubdivision) => {
-    setSubdivisionState(newSubdivision);
+  const setSubdivision = useCallback((sub) => {
+    setSubdivisionState(sub);
   }, []);
 
-  const setVolume = useCallback((newVolume) => {
-    setVolumeState(Math.max(MIN_VOLUME, Math.min(MAX_VOLUME, newVolume)));
+  const setVolume = useCallback((vol) => {
+    setVolumeState(Math.max(0, Math.min(100, vol)));
   }, []);
 
   const togglePlay = useCallback(() => {
-    setIsPlayingState((prev) => !prev);
+    setIsPlayingState(prev => !prev);
   }, []);
 
   const value = {

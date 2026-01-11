@@ -3,30 +3,20 @@ import { View, StyleSheet, Animated } from 'react-native';
 import { useMetronome } from '../contexts/MetronomeContext';
 
 export const MetronomeVisualizer = () => {
-  const { bpm, isPlaying, timeSignature } = useMetronome();
+  const { bpm, isPlaying } = useMetronome();
   const swingAnimation = useRef(new Animated.Value(0)).current;
   const tickAnimation = useRef(new Animated.Value(0)).current;
-  const animationRef = useRef(null);
 
   useEffect(() => {
     if (!isPlaying) {
       swingAnimation.setValue(0);
       tickAnimation.setValue(0);
-      if (animationRef.current) {
-        animationRef.current.stop();
-      }
       return;
     }
 
-    const beatsPerMeasure = parseInt(timeSignature[0]);
     const duration = (60 / bpm) * 1000; // Duration in ms for one beat
 
-    // Stop any existing animation
-    if (animationRef.current) {
-      animationRef.current.stop();
-    }
-
-    // Red arm swing animation - swings once per beat
+    // Red arm swing animation
     const swing = Animated.loop(
       Animated.sequence([
         Animated.timing(swingAnimation, {
@@ -42,7 +32,7 @@ export const MetronomeVisualizer = () => {
       ])
     );
 
-    // Tick indicator blink - blinks once per beat
+    // Tick indicator blink
     const tick = Animated.loop(
       Animated.sequence([
         Animated.timing(tickAnimation, {
@@ -60,13 +50,12 @@ export const MetronomeVisualizer = () => {
 
     swing.start();
     tick.start();
-    animationRef.current = { swing, tick };
 
     return () => {
       swing.stop();
       tick.stop();
     };
-  }, [isPlaying, bpm, timeSignature, swingAnimation, tickAnimation]);
+  }, [isPlaying, bpm, swingAnimation, tickAnimation]);
 
   const rotateInterpolate = swingAnimation.interpolate({
     inputRange: [0, 1],
@@ -75,21 +64,25 @@ export const MetronomeVisualizer = () => {
 
   const opacityInterpolate = tickAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0.2, 1],
+    outputRange: [0.3, 1],
+  });
+
+  const scaleInterpolate = tickAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.8, 1.2],
   });
 
   return (
     <View style={styles.container}>
-      <View style={styles.visualizerContainer}>
-        <View style={styles.centerPoint} />
+      <View style={styles.visualizer}>
+        <View style={styles.pivot} />
         <Animated.View
           style={[
             styles.arm,
             {
               transform: [
-                { translateY: -50 },
                 { rotate: rotateInterpolate },
-                { translateY: 50 },
+                { translateY: -60 },
               ],
             },
           ]}
@@ -100,6 +93,7 @@ export const MetronomeVisualizer = () => {
           styles.tickIndicator,
           {
             opacity: opacityInterpolate,
+            transform: [{ scale: scaleInterpolate }],
           },
         ]}
       />
@@ -110,42 +104,46 @@ export const MetronomeVisualizer = () => {
 const styles = StyleSheet.create({
   container: {
     width: 200,
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  visualizerContainer: {
-    width: 150,
     height: 150,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
   },
-  centerPoint: {
-    position: 'absolute',
+  visualizer: {
+    width: 200,
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  pivot: {
     width: 8,
     height: 8,
     borderRadius: 4,
     backgroundColor: '#666',
+    position: 'absolute',
+    top: '50%',
     zIndex: 2,
   },
   arm: {
-    position: 'absolute',
     width: 4,
-    height: 100,
+    height: 80,
     backgroundColor: '#FF0000',
+    position: 'absolute',
+    top: '50%',
     borderRadius: 2,
-    transformOrigin: 'center',
+    zIndex: 1,
   },
   tickIndicator: {
-    position: 'absolute',
     width: 24,
     height: 24,
     borderRadius: 12,
     backgroundColor: '#00FF00',
-    bottom: 20,
-    borderWidth: 2,
-    borderColor: '#00AA00',
+    marginTop: 20,
+    shadowColor: '#00FF00',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+    elevation: 8,
   },
 });
