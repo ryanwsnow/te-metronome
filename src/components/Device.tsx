@@ -6,8 +6,11 @@ import {
   MIN_BPM,
   SUBDIVISION_STEPS,
   beatUnitLabel,
+  noteLabel,
   subdivisionChoices,
   subdivisionIndex,
+  subdivisionNote,
+  type NoteName,
   type Subdivision,
   type TimeSignature,
 } from '../rhythm'
@@ -19,6 +22,8 @@ import speakerC from '../assets/speaker-c.svg'
 import iconPretty from '../assets/icon-pretty.svg'
 import vibration from '../assets/vibration.svg'
 import noteQuarter from '../assets/note-quarter.svg'
+import noteEighth from '../assets/note-eighth.svg'
+import noteSixteenth from '../assets/note-sixteenth.svg'
 import noteDotted from '../assets/note-dotted-quarter.svg'
 import midiMark from '../assets/midi.svg'
 import barCorner from '../assets/bar-corner.svg'
@@ -29,6 +34,13 @@ import powerOff from '../assets/power-off.svg'
 import powerOn from '../assets/power-on.svg'
 
 const SIGNATURES: TimeSignature[] = ['4/4', '3/4', '6/8']
+
+const NOTE_SRC: Record<NoteName, string> = {
+  quarter: noteQuarter,
+  eighth: noteEighth,
+  sixteenth: noteSixteenth,
+  'dotted-quarter': noteDotted,
+}
 
 const ARM_PIVOT = '24 55.2'
 const ARM_LEFT = -26.42
@@ -80,7 +92,8 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
         const degrees = reducedMotion ? (ARM_LEFT + ARM_RIGHT) / 2 : armDegrees(visual.pendulum)
         armRef.current?.setAttribute('transform', `rotate(${degrees} ${ARM_PIVOT})`)
         if (ticksRef.current) {
-          ticksRef.current.dataset.side = visual.pendulum < 0 ? 'left' : 'right'
+          if (visual.beatSide) ticksRef.current.dataset.side = visual.beatSide
+          else delete ticksRef.current.dataset.side
         }
         setSounding((current) => {
           if (
@@ -100,7 +113,8 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
     return () => window.cancelAnimationFrame(frame)
   }, [playing, reducedMotion])
 
-  const choices = subdivisionChoices(settings.signature)
+  const choices = subdivisionChoices()
+  const clickNote = subdivisionNote(settings.signature, settings.subdivision)
   const signaturePending = playing && sounding !== null && sounding.signature !== settings.signature
   const subdivisionPending = playing && sounding !== null && sounding.subdivision !== settings.subdivision
   const subIndex = subdivisionIndex(settings.subdivision)
@@ -181,8 +195,8 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
           <img
             className="art"
             style={place(346.2, 338, 10.8, 14.4)}
-            src={settings.signature === '6/8' ? noteDotted : noteQuarter}
-            alt=""
+            src={NOTE_SRC[clickNote]}
+            alt={noteLabel(clickNote)}
           />
           <span className="sr-only">Beat unit: {beatUnitLabel(settings.signature)}</span>
           <div style={place(371.2, 321, 34, 96.3)}>
@@ -192,7 +206,6 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
               const className = [
                 'sub-chip',
                 active ? 'is-active' : '',
-                active && subdivisionPending ? 'is-pending' : '',
                 !active && subdivisionPending && soundingNow ? 'is-sounding' : '',
               ].filter(Boolean).join(' ')
               return (
@@ -295,7 +308,7 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
               step={1}
               value={subIndex}
               angle={subAngle}
-              valueText={choices.find((choice) => choice.id === settings.subdivision)?.label ?? '1/4'}
+              valueText={choices.find((choice) => choice.id === settings.subdivision)?.label ?? noteLabel(clickNote)}
               onChange={(index) => {
                 const subdivision: Subdivision = SUBDIVISION_STEPS[index] ?? 'coarse'
                 onSettings({ ...settings, subdivision })
