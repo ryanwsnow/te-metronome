@@ -154,8 +154,8 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
             </g>
           </svg>
 
-          <img className="art" style={place(260.4, 367.6, 18.5, 21.5)} src={barCorner} alt="" />
           <span className="bar-label" style={place(262.4, 345.6, 36, 20)}>BAR</span>
+          <img className="art bar-corner" style={place(260.4, 343.4, 18.5, 21.5)} src={barCorner} alt="" />
           <img className="art" style={place(262.5, 386.1, 35.7, 10.5)} src={midiMark} alt="" />
 
           <img

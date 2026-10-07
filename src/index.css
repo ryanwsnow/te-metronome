@@ -118,7 +118,10 @@ button, input { font: inherit; }
   font-family: "Source Code Pro", ui-monospace, monospace;
   font-size: calc(var(--u) * 16);
   line-height: 1;
+  z-index: 1;
 }
+
+.bar-corner { z-index: 2; }
 
 .sub-chip {
   position: absolute;
