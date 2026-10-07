@@ -1,0 +1,294 @@
+@font-face {
+  font-family: "Digital Numbers";
+  src: url("./assets/fonts/DigitalNumbers-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  font-family: Inter, "Segoe UI", sans-serif;
+  background: #141414;
+  color: #111;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+}
+
+button, input { font: inherit; }
+
+.stage {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  background: radial-gradient(circle at 50% 40%, #2a2a2a, #101010 70%);
+}
+
+.device-slot {
+  width: min(430px, calc(100vw - 16px), calc((100dvh - 16px) * 430 / 932));
+  aspect-ratio: 430 / 932;
+  container-type: inline-size;
+}
+
+.device {
+  --u: calc(100cqi / 430);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+.body {
+  border: calc(var(--u) * 1) solid #f4f4f4;
+  border-radius: calc(var(--u) * 15);
+  background: linear-gradient(160deg, #d9d9db 5%, #a9a9ab 93%);
+}
+
+.screen {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05), transparent 12% 88%, rgba(255, 255, 255, 0.08)),
+    linear-gradient(180deg, #3a3a3a, #111 28%, #070707 70%, #000);
+  box-shadow: inset 0 calc(var(--u) * 10) calc(var(--u) * 18) rgba(0, 0, 0, 0.45);
+}
+
+.art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bpm-stack {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 8);
+}
+
+.bpm-slot {
+  position: relative;
+  width: 1ch;
+  height: 1em;
+  font-family: "Digital Numbers", monospace;
+  font-size: calc(var(--u) * 76);
+  line-height: 1;
+}
+
+.bpm-ghost,
+.bpm-digit {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bpm-ghost { color: rgba(178, 188, 200, 0.16); }
+
+.bpm-digit {
+  color: #b2bcc8;
+  text-shadow: 0 0 calc(var(--u) * 6) rgba(178, 188, 200, 0.28);
+}
+
+.metro {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.metro.is-on { filter: drop-shadow(0 0 calc(var(--u) * 4) rgba(226, 45, 98, 0.45)); }
+.metro-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+.ticks rect { fill: #2a2a2a; }
+.ticks[data-flash="sub"] rect { fill: #8a3048; }
+.ticks[data-flash="beat"] rect { fill: #e22d62; }
+.ticks[data-flash="accent"] rect { fill: #ff5d8a; }
+
+.bar-label {
+  color: #fff;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: calc(var(--u) * 16);
+  line-height: 1;
+}
+
+.sub-chip {
+  position: absolute;
+  left: 0;
+  width: calc(var(--u) * 34);
+  height: calc(var(--u) * 24.8);
+  display: grid;
+  place-items: center;
+  background: #111;
+  color: #8d8d8d;
+  border: calc(var(--u) * 1) solid #000;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: calc(var(--u) * 14);
+  line-height: 1;
+}
+
+.sub-chip.is-active {
+  background: #ddd;
+  color: #3a3a3a;
+  box-shadow: calc(var(--u) * 3) calc(var(--u) * 3) 0 #d02555;
+}
+
+.sub-chip.is-pending { outline: calc(var(--u) * 1) dashed #d02555; outline-offset: calc(var(--u) * 2); }
+.sub-chip.is-sounding { color: #d7d7d7; }
+
+.control-label {
+  color: #434343;
+  font-size: calc(var(--u) * 12);
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.label-center { text-align: center; }
+
+.bpm-slider {
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.timing-btn {
+  position: absolute;
+  top: 0;
+  width: calc(var(--u) * 27);
+  height: calc(var(--u) * 37);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.timing-btn svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+}
+
+.timing-btn.is-pending { outline: calc(var(--u) * 1) dashed #e22d62; outline-offset: calc(var(--u) * 2); }
+
+.knob-anchor,
+.knob {
+  width: 100%;
+  height: 100%;
+}
+
+.knob {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+  overflow: visible;
+}
+
+.knob:active { cursor: grabbing; }
+
+.knob img {
+  position: absolute;
+  left: calc(var(--u) * -3.48);
+  top: 0;
+  width: calc(var(--u) * 100.92);
+  height: calc(var(--u) * 100.92);
+  transform-origin: 46.5% 43.1%;
+  transition: transform 160ms ease;
+  pointer-events: none;
+}
+
+.knob-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--u) * 87);
+  height: calc(var(--u) * 87);
+  transform-origin: center;
+  transition: transform 160ms ease;
+  pointer-events: none;
+}
+
+.knob-mark::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(var(--u) * 4);
+  width: calc(var(--u) * 3.48);
+  height: calc(var(--u) * 10.44);
+  transform: translateX(-50%);
+  background: #fff;
+}
+
+.knob-readout {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + var(--u) * 2);
+  transform: translateX(-50%);
+  z-index: 4;
+  padding: calc(var(--u) * 2) calc(var(--u) * 6);
+  background: #1c1c1c;
+  color: #f3f3f3;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: calc(var(--u) * 12);
+  pointer-events: none;
+}
+
+.power-btn {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 4;
+  overflow: visible;
+}
+
+.power-btn img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--u) * 38.92);
+  height: calc(var(--u) * 48.92);
+  transform: translate(-50%, -50%) rotate(90deg);
+  pointer-events: none;
+}
+
+.knob:focus-visible,
+.power-btn:focus-visible,
+.timing-btn:focus-visible,
+.metro:focus-visible,
+.bpm-slider:focus-visible {
+  outline: calc(var(--u) * 2) solid #e22d62;
+  outline-offset: calc(var(--u) * 3);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metro.is-on { filter: none; }
+  .knob img,
+  .knob-mark { transition: none; }
+}

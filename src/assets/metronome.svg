@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="48" height="79.2" viewBox="0 0 48 79.2" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="metronome-visualization">
+<mask id="stroke0_56_419" fill="white">
+<path d="M21.7347 6.47403C22.4846 4.33091 25.5154 4.33091 26.2653 6.47403L43.6675 56.2073C44.2135 57.7677 43.0553 59.4 41.4021 59.4H6.59786C4.9447 59.4 3.78654 57.7677 4.33253 56.2073L21.7347 6.47403Z"/>
+</mask>
+<path id="metronome-outline" d="M6.59786 59.4H41.4021C43.0553 59.4 44.2135 57.7677 43.6675 56.2073L26.2653 6.47403C25.5154 4.33091 22.4846 4.33091 21.7347 6.47403L4.33253 56.2073C3.78654 57.7677 4.9447 59.4 6.59786 59.4Z" stroke-width="4.8" stroke="#B2BCC8" mask="url(#stroke0_56_419)"/>
+<path id="metronome-arm" d="M24 55.2L42 12" stroke-width="2.4" stroke="#E22D62"/>
+<rect id="metronome-outline-base" x="19.2" y="52.8" width="9.6" height="4.8" fill="#B2BCC8"/>
+</g>
+</svg>

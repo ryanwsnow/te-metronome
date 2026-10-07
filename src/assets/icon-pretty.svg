@@ -1,0 +1,21 @@
+<svg width="21" height="82" viewBox="0 0 21 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="21" height="22" fill="#2A2A2A"/>
+  <g transform="translate(0 30)">
+    <rect width="21" height="22" fill="#CF8345"/>
+    <g fill="#000918">
+      <circle cx="2" cy="2" r="1"/><circle cx="2" cy="5" r="1"/><circle cx="2" cy="8" r="1"/><circle cx="2" cy="11" r="1"/><circle cx="2" cy="14" r="1"/><circle cx="2" cy="17" r="1"/><circle cx="2" cy="20" r="1"/>
+      <circle cx="6" cy="2" r="1"/><circle cx="6" cy="5" r="1"/><circle cx="6" cy="8" r="1"/><circle cx="6" cy="11" r="1"/><circle cx="6" cy="14" r="1"/><circle cx="6" cy="17" r="1"/><circle cx="6" cy="20" r="1"/>
+      <circle cx="10" cy="2" r="1"/><circle cx="10" cy="5" r="1"/><circle cx="10" cy="8" r="1"/><circle cx="10" cy="11" r="1"/><circle cx="10" cy="14" r="1"/><circle cx="10" cy="17" r="1"/><circle cx="10" cy="20" r="1"/>
+    </g>
+    <path d="M21 22H0L8 16.2217V0H21V22Z" fill="#E22D62"/>
+  </g>
+  <g transform="translate(0 60)">
+    <rect width="21" height="22" fill="#CF8345"/>
+    <g fill="#000918">
+      <circle cx="2" cy="2" r="1"/><circle cx="2" cy="5" r="1"/><circle cx="2" cy="8" r="1"/><circle cx="2" cy="11" r="1"/><circle cx="2" cy="14" r="1"/><circle cx="2" cy="17" r="1"/><circle cx="2" cy="20" r="1"/>
+      <circle cx="6" cy="2" r="1"/><circle cx="6" cy="5" r="1"/><circle cx="6" cy="8" r="1"/><circle cx="6" cy="11" r="1"/><circle cx="6" cy="14" r="1"/><circle cx="6" cy="17" r="1"/><circle cx="6" cy="20" r="1"/>
+      <circle cx="10" cy="2" r="1"/><circle cx="10" cy="5" r="1"/><circle cx="10" cy="8" r="1"/><circle cx="10" cy="11" r="1"/><circle cx="10" cy="14" r="1"/><circle cx="10" cy="17" r="1"/><circle cx="10" cy="20" r="1"/>
+    </g>
+    <path d="M21 22H0L8 16.2217V0H21V22Z" fill="#5BB1DA"/>
+  </g>
+</svg>

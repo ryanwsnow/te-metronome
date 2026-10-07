@@ -1,0 +1,23 @@
+<svg preserveAspectRatio="none" overflow="visible" width="57" height="57" viewBox="248 0 57 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g filter="url(#shadow)">
+    <path d="M276.5 0C292.24 0 305 12.7599 305 28.5C305 44.2401 292.24 57 276.5 57C260.76 57 248 44.2401 248 28.5C248 12.7599 260.76 0 276.5 0Z" fill="url(#face)"/>
+    <path d="M276.5 1.222C291.565 1.222 303.778 13.435 303.778 28.5C303.778 43.565 291.565 55.778 276.5 55.778C261.435 55.778 249.222 43.565 249.222 28.5C249.222 13.435 261.435 1.222 276.5 1.222Z" stroke="url(#rim)" stroke-width="2.444"/>
+  </g>
+  <defs>
+    <filter id="shadow" x="245.5" y="0" width="67" height="67" filterUnits="userSpaceOnUse">
+      <feOffset dx="2.44" dy="4.89"/>
+      <feGaussianBlur stdDeviation="2.44"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.45 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="face" x1="300.778" y1="57" x2="248" y2="7.39" gradientUnits="userSpaceOnUse">
+      <stop offset="0.261" stop-color="#969696"/>
+      <stop offset="0.76" stop-color="#B9B9BD"/>
+      <stop offset="1" stop-color="#C5C5C7"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="314.5" y1="51.72" x2="258.556" y2="7.39" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#434343"/>
+      <stop offset="1" stop-color="#D9D9D9"/>
+    </linearGradient>
+  </defs>
+</svg>
