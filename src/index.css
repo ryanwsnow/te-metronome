@@ -189,6 +189,8 @@ button, input { font: inherit; }
 .knob {
   width: 100%;
   height: 100%;
+  touch-action: none;
+  user-select: none;
 }
 
 .knob {
@@ -197,7 +199,6 @@ button, input { font: inherit; }
   border: 0;
   background: transparent;
   cursor: grab;
-  touch-action: none;
   overflow: visible;
 }
 
@@ -236,18 +237,29 @@ button, input { font: inherit; }
   background: #fff;
 }
 
+.knob-mark-volume::before { background: #7b7b7b; }
+
 .knob-readout {
   position: absolute;
   left: 50%;
-  bottom: calc(100% + var(--u) * 2);
+  bottom: calc(100% + var(--u) * 4);
+  z-index: 5;
   transform: translateX(-50%);
-  z-index: 4;
   padding: calc(var(--u) * 2) calc(var(--u) * 6);
   background: #1c1c1c;
   color: #f3f3f3;
   font-family: "Source Code Pro", ui-monospace, monospace;
-  font-size: calc(var(--u) * 12);
+  font-size: calc(var(--u) * 11);
+  line-height: 1.3;
+  white-space: nowrap;
   pointer-events: none;
+  visibility: hidden;
+}
+
+.knob-anchor:hover .knob-readout,
+.knob-anchor:focus-within .knob-readout,
+.knob-anchor.is-dragging .knob-readout {
+  visibility: visible;
 }
 
 .power-btn {
@@ -269,13 +281,17 @@ button, input { font: inherit; }
   pointer-events: none;
 }
 
-.knob:focus-visible,
 .power-btn:focus-visible,
 .timing-btn:focus-visible,
 .metro:focus-visible,
 .bpm-slider:focus-visible {
   outline: calc(var(--u) * 2) solid #e22d62;
   outline-offset: calc(var(--u) * 3);
+}
+
+.knob:focus,
+.knob:focus-visible {
+  outline: none;
 }
 
 .sr-only {

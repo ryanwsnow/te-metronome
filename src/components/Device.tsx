@@ -211,11 +211,9 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
               min={0}
               max={100}
               step={1}
-              sensitivity={1.7}
               value={settings.volume}
               angle={volumeAngle}
               valueText={`${settings.volume}%`}
-              showReadout
               onChange={(volume) => onSettings({ ...settings, volume })}
             />
           </div>
@@ -282,7 +280,6 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
               min={0}
               max={2}
               step={1}
-              sensitivity={36}
               value={subIndex}
               angle={subAngle}
               valueText={choices.find((choice) => choice.id === settings.subdivision)?.label ?? '1/4'}

@@ -8,11 +8,9 @@ type KnobProps = {
   min: number
   max: number
   step: number
-  sensitivity: number
   angle: number
   variant: 'volume' | 'subdivision'
   valueText: string
-  showReadout?: boolean
   onChange: (value: number) => void
 }
 
@@ -31,35 +29,29 @@ export function Knob({
   min,
   max,
   step,
-  sensitivity,
   angle,
   variant,
   valueText,
-  showReadout = false,
   onChange,
 }: KnobProps) {
   const drag = useRef<{ y: number; value: number } | null>(null)
-  const [readout, setReadout] = useState(false)
-  const hideTimer = useRef<number | null>(null)
-
-  function reveal() {
-    if (!showReadout) return
-    setReadout(true)
-    if (hideTimer.current !== null) window.clearTimeout(hideTimer.current)
-    hideTimer.current = window.setTimeout(() => setReadout(false), 800)
-  }
+  const [dragging, setDragging] = useState(false)
+  const pixelsPerStep = variant === 'volume' ? 2 : 48
+  const src = variant === 'volume' ? knobVolume : knobSubdivision
 
   function commit(next: number) {
     const clamped = clamp(quantize(next, step), min, max)
     if (clamped !== value) onChange(clamped)
-    reveal()
   }
 
-  const src = variant === 'volume' ? knobVolume : knobSubdivision
+  function endDrag() {
+    drag.current = null
+    setDragging(false)
+  }
 
   return (
-    <div className="knob-anchor">
-      {showReadout && readout && (
+    <div className={dragging ? 'knob-anchor is-dragging' : 'knob-anchor'}>
+      {variant === 'volume' && (
         <span className="knob-readout" aria-hidden="true">
           {valueText}
         </span>
@@ -68,54 +60,44 @@ export function Knob({
         type="button"
         className="knob"
         aria-label={label}
-          aria-valuemin={min}
-          aria-valuemax={max}
-          aria-valuenow={value}
-          aria-valuetext={valueText}
-          role="slider"
-          aria-orientation="vertical"
-          onPointerDown={(event) => {
-            event.currentTarget.setPointerCapture(event.pointerId)
-            drag.current = { y: event.clientY, value }
-          }}
-          onPointerMove={(event) => {
-            if (!drag.current) return
-            const delta = drag.current.y - event.clientY
-            commit(drag.current.value + delta / sensitivity)
-          }}
-          onPointerUp={() => {
-            drag.current = null
-          }}
-          onPointerCancel={() => {
-            drag.current = null
-          }}
-          onKeyDown={(event) => {
-            const page = variant === 'volume' ? 10 : step
-            if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
-              event.preventDefault()
-              commit(value + step)
-            } else if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
-              event.preventDefault()
-              commit(value - step)
-            } else if (event.key === 'PageUp') {
-              event.preventDefault()
-              commit(value + page)
-            } else if (event.key === 'PageDown') {
-              event.preventDefault()
-              commit(value - page)
-            } else if (event.key === 'Home') {
-              event.preventDefault()
-              commit(min)
-            } else if (event.key === 'End') {
-              event.preventDefault()
-              commit(max)
-            }
-          }}
-        >
-        <img src={src} alt="" style={variant === 'volume' ? { transform: `rotate(${angle}deg)` } : undefined} />
-        {variant === 'subdivision' && (
-          <span className="knob-mark" style={{ transform: `translate(-50%, -50%) rotate(${angle}deg)` }} />
-        )}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value}
+        aria-valuetext={valueText}
+        role="slider"
+        aria-orientation="vertical"
+        onPointerDown={(event) => {
+          if (event.button !== 0) return
+          event.preventDefault()
+          const knob = event.currentTarget
+          knob.focus()
+          knob.setPointerCapture(event.pointerId)
+          drag.current = { y: event.clientY, value }
+          setDragging(true)
+        }}
+        onPointerMove={(event) => {
+          if (!drag.current) return
+          const delta = drag.current.y - event.clientY
+          commit(drag.current.value + delta / pixelsPerStep)
+        }}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onLostPointerCapture={endDrag}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
+            event.preventDefault()
+            commit(value + step)
+          } else if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
+            event.preventDefault()
+            commit(value - step)
+          }
+        }}
+      >
+        <img src={src} alt="" />
+        <span
+          className={variant === 'volume' ? 'knob-mark knob-mark-volume' : 'knob-mark'}
+          style={{ transform: `translate(-50%, -50%) rotate(${angle}deg)` }}
+        />
       </button>
     </div>
   )

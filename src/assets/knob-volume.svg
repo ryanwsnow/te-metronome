@@ -7,7 +7,6 @@
 </mask>
 <path d="M46.98 0C71.0044 -1.05014e-06 90.48 19.4756 90.48 43.5C90.48 67.5244 71.0044 87 46.98 87C22.9556 87 3.48 67.5244 3.48 43.5C3.48 19.4756 22.9556 1.05014e-06 46.98 0Z" stroke-width="3.48" stroke="url(#paint1_linear_56_412)" mask="url(#stroke1_56_412)"/>
 </g>
-<rect id="rotary-knob-indicator" x="45.48" y="11.44" width="10.44" height="3.48" transform="rotate(-90 45.48 11.44)" fill="#7B7B7B"/>
 <g id="rotary-knob-grip" filter="url(#filter1_d_56_412)">
 <circle cx="46.48" cy="44" r="19" transform="rotate(-90 46.48 44)" fill="url(#paint2_linear_56_412)"/>
 <circle cx="46.48" cy="44" r="18.13" transform="rotate(-90 46.48 44)" stroke="url(#paint3_linear_56_412)" stroke-width="1.74"/>
