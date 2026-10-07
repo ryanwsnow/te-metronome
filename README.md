@@ -14,4 +14,4 @@ npm test
 npm run build
 ```
 
-The production build uses the `/te-metronome/` base path for GitHub Pages. Pushing `main` runs the Pages workflow.
+Pushing `main` runs the Pages workflow and publishes the site at the root of https://metronome.ryanwsnow.com/.
