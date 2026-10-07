@@ -73,6 +73,53 @@ export function clickKind(signature: TimeSignature, subdivision: Subdivision, in
   return Math.floor(indexInBar / perBeat) === 0 ? 'accent' : 'beat'
 }
 
+export type TimelineClick = {
+  time: number
+  kind: ClickKind
+  index: number
+  pattern: Pattern
+}
+
+const BEAT_FLASH_SECONDS = 0.09
+
+export function mainBeatIndex(signature: TimeSignature, subdivision: Subdivision, indexInBar: number): number {
+  return Math.floor(indexInBar / clicksPerMainBeat(signature, subdivision))
+}
+
+/** +1 is the right extreme, -1 is the left. Phase 0 is the beat that just sounded. */
+export function swingFromBeat(beatIndex: number, phase: number): number {
+  const clamped = Math.min(1, Math.max(0, phase))
+  const cosine = Math.cos(clamped * Math.PI)
+  return beatIndex % 2 === 0 ? cosine : -cosine
+}
+
+export function beatVisual(clicks: readonly TimelineClick[], now: number): { pendulum: number; beatSide: 'left' | 'right' | null } {
+  let lastBeat: TimelineClick | null = null
+  let nextBeat: TimelineClick | null = null
+  for (const click of clicks) {
+    if (click.kind === 'sub') continue
+    if (click.time <= now) lastBeat = click
+    else if (!nextBeat) nextBeat = click
+  }
+
+  if (!lastBeat) {
+    const upcoming = nextBeat
+    const beatIndex = upcoming
+      ? mainBeatIndex(upcoming.pattern.signature, upcoming.pattern.subdivision, upcoming.index)
+      : 0
+    return { pendulum: beatIndex % 2 === 0 ? 1 : -1, beatSide: null }
+  }
+
+  const beatIndex = mainBeatIndex(lastBeat.pattern.signature, lastBeat.pattern.subdivision, lastBeat.index)
+  const span = nextBeat ? nextBeat.time - lastBeat.time : mainBeatDuration(lastBeat.pattern.bpm)
+  const phase = span > 0 ? (now - lastBeat.time) / span : 0
+  const heardFor = now - lastBeat.time
+  const beatSide = heardFor >= 0 && heardFor < BEAT_FLASH_SECONDS
+    ? beatIndex % 2 === 0 ? 'right' : 'left'
+    : null
+  return { pendulum: swingFromBeat(beatIndex, phase), beatSide }
+}
+
 export function advanceAfterClick(state: SchedulerState, desired: Pattern): { interval: number; next: SchedulerState } {
   const perBeat = clicksPerMainBeat(state.pattern.signature, state.pattern.subdivision)
   const total = perBeat * mainBeatsPerBar(state.pattern.signature)

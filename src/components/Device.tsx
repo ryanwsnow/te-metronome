@@ -92,7 +92,8 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
         const degrees = reducedMotion ? (ARM_LEFT + ARM_RIGHT) / 2 : armDegrees(visual.pendulum)
         armRef.current?.setAttribute('transform', `rotate(${degrees} ${ARM_PIVOT})`)
         if (ticksRef.current) {
-          ticksRef.current.dataset.side = visual.pendulum < 0 ? 'left' : 'right'
+          if (visual.beatSide) ticksRef.current.dataset.side = visual.beatSide
+          else delete ticksRef.current.dataset.side
         }
         setSounding((current) => {
           if (

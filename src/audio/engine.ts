@@ -1,27 +1,22 @@
 import {
   advanceAfterClick,
+  beatVisual,
   clickKind,
-  clicksPerMainBeat,
   mainBeatDuration,
   volumeToGain,
-  type ClickKind,
   type Pattern,
   type SchedulerState,
+  type TimelineClick,
 } from '../rhythm'
 import type { Settings } from '../storage'
 
 export type VisualState = {
-  flash: ClickKind | null
+  beatSide: 'left' | 'right' | null
   pendulum: number
   pattern: Pattern
 }
 
-type ScheduledClick = {
-  time: number
-  kind: ClickKind
-  index: number
-  pattern: Pattern
-}
+type ScheduledClick = TimelineClick
 
 type LiveNode = {
   node: OscillatorNode
@@ -124,30 +119,20 @@ export class MetronomeEngine {
       subdivision: settings.subdivision,
     }
     if (!this.running || !this.ctx) {
-      return { flash: null, pendulum: 0, pattern: fallback }
+      return { beatSide: null, pendulum: 1, pattern: fallback }
     }
 
     const now = this.ctx.currentTime
-    let last: ScheduledClick | null = null
-    let lastBeat: ScheduledClick | null = null
+    let audible: ScheduledClick | null = null
     for (const click of this.clicks) {
-      if (click.time > now) continue
-      last = click
-      if (click.kind !== 'sub') lastBeat = click
+      if (click.time <= now) audible = click
     }
-
-    const flash = last && now - last.time < 0.09 ? last.kind : null
-    let pendulum = 0
-    if (lastBeat) {
-      const beatDur = mainBeatDuration(lastBeat.pattern.bpm)
-      const phase = Math.min(1, Math.max(0, (now - lastBeat.time) / beatDur))
-      const perBeat = clicksPerMainBeat(lastBeat.pattern.signature, lastBeat.pattern.subdivision)
-      const beatIndex = Math.floor(lastBeat.index / perBeat)
-      const direction = beatIndex % 2 === 0 ? 1 : -1
-      pendulum = direction * Math.cos(phase * Math.PI)
+    const visual = beatVisual(this.clicks, now)
+    return {
+      pendulum: visual.pendulum,
+      beatSide: visual.beatSide,
+      pattern: audible?.pattern ?? this.clicks[0]?.pattern ?? fallback,
     }
-
-    return { flash, pendulum, pattern: last?.pattern ?? this.state.pattern }
   }
 
   dispose(): void {
@@ -182,7 +167,8 @@ export class MetronomeEngine {
       return
     }
 
-    const horizon = ctx.currentTime + SCHEDULE_AHEAD
+    const beat = mainBeatDuration(this.state.pattern.bpm)
+    const horizon = ctx.currentTime + Math.max(SCHEDULE_AHEAD, beat) + 0.001
     if (this.nextTime < ctx.currentTime - 0.02) {
       this.nextTime = ctx.currentTime + 0.05
     }
@@ -255,7 +241,7 @@ export class MetronomeEngine {
   }
 
   private prune(now: number): void {
-    this.clicks = this.clicks.filter((click) => click.time > now - 2)
+    this.clicks = this.clicks.filter((click) => click.time > now - 4)
     this.live = this.live.filter((item) => item.stopAt > now)
   }
 

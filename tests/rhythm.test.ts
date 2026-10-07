@@ -4,9 +4,11 @@ import {
   advanceAfterClick,
   barDuration,
   beatUnitLabel,
+  beatVisual,
   clickInterval,
   clickKind,
   clicksPerMainBeat,
+  swingFromBeat,
   mainBeatDuration,
   mainBeatsPerBar,
   noteLabel,
@@ -117,6 +119,39 @@ test('each subdivision position shows the click note without changing the beat u
   assert.equal(beatUnitLabel('6/8'), 'Dotted quarter note')
   assert.equal(noteLabel('dotted-quarter'), 'Dotted quarter note')
   assert.deepEqual(subdivisionChoices().map((choice) => choice.label), ['1/16', '1/8', '1/4'])
+})
+
+test('the arm reaches alternating extremes on main beats and ignores subdivision clicks', () => {
+  assert.equal(swingFromBeat(0, 0), 1)
+  assert.ok(Math.abs(swingFromBeat(0, 1) - -1) < 1e-10)
+  assert.ok(Math.abs(swingFromBeat(1, 0) - -1) < 1e-10)
+  assert.equal(swingFromBeat(1, 1), 1)
+  assert.ok(Math.abs(swingFromBeat(0, 0.5)) < 1e-10)
+  assert.equal(swingFromBeat(2, 0), 1)
+
+  const pattern: Pattern = { bpm: 120, signature: '4/4', subdivision: 'medium' }
+  const clicks = [
+    { time: 1, kind: 'accent' as const, index: 0, pattern },
+    { time: 1.25, kind: 'sub' as const, index: 1, pattern },
+    { time: 1.5, kind: 'beat' as const, index: 2, pattern },
+    { time: 1.75, kind: 'sub' as const, index: 3, pattern },
+    { time: 2, kind: 'beat' as const, index: 4, pattern },
+  ]
+  const before = beatVisual(clicks, 0.9)
+  assert.equal(before.pendulum, 1)
+  assert.equal(before.beatSide, null)
+  const onRight = beatVisual(clicks, 1)
+  assert.equal(onRight.pendulum, 1)
+  assert.equal(onRight.beatSide, 'right')
+  const mid = beatVisual(clicks, 1.25)
+  assert.ok(Math.abs(mid.pendulum) < 1e-10)
+  assert.equal(mid.beatSide, null)
+  const onLeft = beatVisual(clicks, 1.5)
+  assert.ok(Math.abs(onLeft.pendulum - -1) < 1e-10)
+  assert.equal(onLeft.beatSide, 'left')
+  const back = beatVisual(clicks, 2)
+  assert.equal(back.pendulum, 1)
+  assert.equal(back.beatSide, 'right')
 })
 
 test('volume curve is mute at zero, unity at full, and monotonic', () => {
