@@ -156,6 +156,8 @@ button, input { font: inherit; }
 
 .label-center { text-align: center; }
 
+.slider-knob { z-index: 2; }
+
 .bpm-slider {
   margin: 0;
   opacity: 0;

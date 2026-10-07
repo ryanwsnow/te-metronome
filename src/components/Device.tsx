@@ -201,10 +201,10 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
           </div>
 
           <span className="control-label" style={place(24, 488, 40, 15)}>BPM</span>
-          <div style={place(24, 518, 381, 28)}>
+          <div style={place(24, 528, 381, 7)}>
             <img className="art" src={sliderTrack} alt="" />
           </div>
-          <img className="art" style={{ ...place(24 + sliderX, 503, 57, 57), pointerEvents: 'none' }} src={sliderKnob} alt="" />
+          <img className="art slider-knob" style={{ ...place(24 + sliderX - 2.444, 503, 66.778, 66.778), pointerEvents: 'none' }} src={sliderKnob} alt="" />
           <input
             id="bpm-slider"
             className="bpm-slider"
