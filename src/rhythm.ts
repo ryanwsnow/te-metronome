@@ -1,6 +1,7 @@
 export type TimeSignature = '4/4' | '3/4' | '6/8'
 export type Subdivision = 'coarse' | 'medium' | 'fine'
 export type ClickKind = 'accent' | 'beat' | 'sub'
+export type NoteName = 'quarter' | 'eighth' | 'sixteenth' | 'dotted-quarter'
 
 export type Pattern = {
   bpm: number
@@ -102,11 +103,25 @@ export function advanceAfterClick(state: SchedulerState, desired: Pattern): { in
   }
 }
 
-export function subdivisionChoices(signature: TimeSignature): { id: Subdivision; label: string }[] {
+/** Note for one audible click. The BPM beat unit stays a quarter or dotted quarter. */
+export function subdivisionNote(signature: TimeSignature, subdivision: Subdivision): NoteName {
+  if (subdivision === 'medium') return 'eighth'
+  if (subdivision === 'fine') return 'sixteenth'
+  return signature === '6/8' ? 'dotted-quarter' : 'quarter'
+}
+
+export function noteLabel(note: NoteName): string {
+  if (note === 'dotted-quarter') return 'Dotted quarter note'
+  if (note === 'eighth') return 'Eighth note'
+  if (note === 'sixteenth') return 'Sixteenth note'
+  return 'Quarter note'
+}
+
+export function subdivisionChoices(): { id: Subdivision; label: string }[] {
   return [
     { id: 'fine', label: '1/16' },
     { id: 'medium', label: '1/8' },
-    { id: 'coarse', label: signature === '6/8' ? '1/4.' : '1/4' },
+    { id: 'coarse', label: '1/4' },
   ]
 }
 

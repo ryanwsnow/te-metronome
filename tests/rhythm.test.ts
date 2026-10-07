@@ -3,11 +3,15 @@ import { test } from 'node:test'
 import {
   advanceAfterClick,
   barDuration,
+  beatUnitLabel,
   clickInterval,
   clickKind,
   clicksPerMainBeat,
   mainBeatDuration,
   mainBeatsPerBar,
+  noteLabel,
+  subdivisionChoices,
+  subdivisionNote,
   volumeToGain,
   type Pattern,
   type SchedulerState,
@@ -99,6 +103,20 @@ test('timing and subdivision changes wait for the next bar', () => {
   assert.equal(state.pattern.subdivision, 'medium')
   const next = advanceAfterClick(state, desired)
   assert.ok(Math.abs(next.interval - 0.5 / 3) < 1e-10)
+})
+
+test('each subdivision position shows the click note without changing the beat unit', () => {
+  const positions: Subdivision[] = ['coarse', 'medium', 'fine']
+  for (const signature of ['4/4', '3/4'] as const) {
+    assert.deepEqual(positions.map((subdivision) => subdivisionNote(signature, subdivision)), ['quarter', 'eighth', 'sixteenth'])
+    assert.deepEqual(positions.map((subdivision) => clicksPerMainBeat(signature, subdivision)), [1, 2, 4])
+    assert.equal(beatUnitLabel(signature), 'Quarter note')
+  }
+  assert.deepEqual(positions.map((subdivision) => subdivisionNote('6/8', subdivision)), ['dotted-quarter', 'eighth', 'sixteenth'])
+  assert.deepEqual(positions.map((subdivision) => clicksPerMainBeat('6/8', subdivision)), [1, 3, 6])
+  assert.equal(beatUnitLabel('6/8'), 'Dotted quarter note')
+  assert.equal(noteLabel('dotted-quarter'), 'Dotted quarter note')
+  assert.deepEqual(subdivisionChoices().map((choice) => choice.label), ['1/16', '1/8', '1/4'])
 })
 
 test('volume curve is mute at zero, unity at full, and monotonic', () => {
