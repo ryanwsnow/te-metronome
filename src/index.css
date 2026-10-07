@@ -108,10 +108,10 @@ button, input { font: inherit; }
 .metro.is-on { filter: drop-shadow(0 0 calc(var(--u) * 4) rgba(226, 45, 98, 0.45)); }
 .metro-svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
+.ticks-layer { z-index: 1; }
 .ticks rect { fill: #2a2a2a; }
-.ticks[data-flash="sub"] rect { fill: #8a3048; }
-.ticks[data-flash="beat"] rect { fill: #e22d62; }
-.ticks[data-flash="accent"] rect { fill: #ff5d8a; }
+.ticks[data-side="left"] [data-side="left"] rect,
+.ticks[data-side="right"] [data-side="right"] rect { fill: #e22d62; }
 
 .bar-label {
   color: #fff;
