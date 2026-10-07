@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import knobSubdivision from '../assets/knob-subdivision.svg'
 import knobVolume from '../assets/knob-volume.svg'
 
@@ -35,7 +35,6 @@ export function Knob({
   onChange,
 }: KnobProps) {
   const drag = useRef<{ y: number; value: number } | null>(null)
-  const [dragging, setDragging] = useState(false)
   const pixelsPerStep = variant === 'volume' ? 2 : 48
   const src = variant === 'volume' ? knobVolume : knobSubdivision
 
@@ -46,16 +45,10 @@ export function Knob({
 
   function endDrag() {
     drag.current = null
-    setDragging(false)
   }
 
   return (
-    <div className={dragging ? 'knob-anchor is-dragging' : 'knob-anchor'}>
-      {variant === 'volume' && (
-        <span className="knob-readout" aria-hidden="true">
-          {valueText}
-        </span>
-      )}
+    <div className="knob-anchor">
       <button
         type="button"
         className="knob"
@@ -73,7 +66,6 @@ export function Knob({
           knob.focus()
           knob.setPointerCapture(event.pointerId)
           drag.current = { y: event.clientY, value }
-          setDragging(true)
         }}
         onPointerMove={(event) => {
           if (!drag.current) return

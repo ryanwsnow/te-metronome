@@ -133,7 +133,10 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
             ))}
           </div>
 
-          <img className="art" style={place(23, 328.1, 21, 82)} src={iconPretty} alt="" />
+          <div style={place(23, 328.1, 21, 82)}>
+            <img className="art" src={iconPretty} alt="" />
+            <span className="volume-indicator">{settings.volume}</span>
+          </div>
           <img className="art" style={place(81.8, 348.6, 55, 41)} src={vibration} alt="" />
 
           <svg className="ticks-layer" style={place(180.6, 401, 36, 10)} viewBox="0 0 36 10" aria-hidden="true">
@@ -230,7 +233,7 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
               step={1}
               value={settings.volume}
               angle={volumeAngle}
-              valueText={`${settings.volume}%`}
+              valueText={`${settings.volume}`}
               onChange={(volume) => onSettings({ ...settings, volume })}
             />
           </div>
