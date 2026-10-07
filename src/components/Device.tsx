@@ -272,18 +272,11 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
                   tabIndex={selected ? 0 : -1}
                   onClick={() => setSignature(signature)}
                 >
-                  <svg viewBox="0 0 27 37" aria-hidden="true">
-                    <rect width="27" height="37" fill="#000" stroke={selected ? '#E6E6E6' : '#B2B2B2'} />
-                    <rect x="1" y="1" width="25" height="35" rx="3" fill={`url(#face-${index})`} stroke={selected ? '#989493' : '#111'} />
-                    <text x="13.5" y="16" textAnchor="middle" fill={selected ? '#fff' : '#9c9c9c'}>{numerator}</text>
-                    <text x="13.5" y="30" textAnchor="middle" fill={selected ? '#fff' : '#9c9c9c'}>{denominator}</text>
-                    <defs>
-                      <linearGradient id={`face-${index}`} x1="2" y1="2" x2="24" y2="36" gradientUnits="userSpaceOnUse">
-                        <stop offset="0.26" stopColor="#1d1d1d" />
-                        <stop offset="0.76" stopColor="#1a1819" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
+                  <span className="timing-cap" />
+                  <span className="timing-digits">
+                    <span>{numerator}</span>
+                    <span>{denominator}</span>
+                  </span>
                 </button>
               )
             })}
