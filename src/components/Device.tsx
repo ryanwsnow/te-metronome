@@ -119,7 +119,7 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
   const signaturePending = playing && sounding !== null && sounding.signature !== settings.signature
   const subdivisionPending = playing && sounding !== null && sounding.subdivision !== settings.subdivision
   const subIndex = subdivisionIndex(settings.subdivision)
-  const subAngle = subIndex * 60
+  const subAngle = -135 + subIndex * 135
   const volumeAngle = -135 + (settings.volume / 100) * 270
   const sliderTravel = 381 - 57
   const sliderX = ((settings.bpm - MIN_BPM) / (MAX_BPM - MIN_BPM)) * sliderTravel
