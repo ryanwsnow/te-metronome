@@ -1,7 +1,7 @@
 <svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="38.92" height="48.92" viewBox="0 0 38.92 48.92" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="powerButton">
 <path id="button-inset" d="M4.46 1.46H32.46V39.46H4.46V1.46Z" fill="black" stroke="url(#paint0_linear_56_339)"/>
-<g id="button-button" filter="url(#filter0_d_56_339)">
+<g id="button-button">
 <rect x="5.96" y="2.96" width="25" height="35" rx="3" fill="url(#paint1_linear_56_339)"/>
 <rect x="6.46" y="3.46" width="24" height="34" rx="2.5" stroke="#0E0D0D"/>
 </g>
@@ -19,16 +19,6 @@
 </g>
 </g>
 <defs>
-<filter id="filter0_d_56_339" x="0" y="0" width="38.92" height="48.92" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dx="1" dy="4"/>
-<feGaussianBlur stdDeviation="3.48"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_56_339"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_56_339" result="shape"/>
-</filter>
 <filter id="filter1_d_56_339" x="4.12692" y="27.9927" width="13.3329" height="13.3329" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>

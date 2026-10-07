@@ -310,7 +310,7 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
           <button
             type="button"
             className="power-btn"
-            style={place(62, 872, 49, 39)}
+            style={place(23, 872, 49, 39)}
             aria-pressed={playing}
             aria-label={playing ? 'Turn metronome off' : 'Turn metronome on'}
             onClick={(event) => {
