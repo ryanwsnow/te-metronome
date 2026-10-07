@@ -19,6 +19,7 @@ import headerPanel from '../assets/header-panel.svg'
 import speakerA from '../assets/speaker-a.svg'
 import speakerB from '../assets/speaker-b.svg'
 import speakerC from '../assets/speaker-c.svg'
+import speakerRow from '../assets/speaker-row.svg'
 import iconPretty from '../assets/icon-pretty.svg'
 import vibration from '../assets/vibration.svg'
 import noteQuarter from '../assets/note-quarter.svg'
@@ -118,7 +119,7 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
   const signaturePending = playing && sounding !== null && sounding.signature !== settings.signature
   const subdivisionPending = playing && sounding !== null && sounding.subdivision !== settings.subdivision
   const subIndex = subdivisionIndex(settings.subdivision)
-  const subAngle = subIndex * 60
+  const subAngle = -135 + subIndex * 135
   const volumeAngle = -135 + (settings.volume / 100) * 270
   const sliderTravel = 381 - 57
   const sliderX = ((settings.bpm - MIN_BPM) / (MAX_BPM - MIN_BPM)) * sliderTravel
@@ -137,6 +138,15 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
           <img className="art" style={place(288, 7, 134, 134)} src={speakerA} alt="" />
           <img className="art" style={place(288, 7, 134, 134)} src={speakerB} alt="" />
           <img className="art" style={place(288, 7, 134, 134)} src={speakerC} alt="" />
+          {Array.from({ length: 8 }, (_, index) => (
+            <img
+              key={index}
+              className="art"
+              style={place(294, 13 + index * 16, 122, 10)}
+              src={speakerRow}
+              alt=""
+            />
+          ))}
 
           <div className="bpm-stack" id="bpm-value" style={place(118, 188, 192, 96)}>
             {String(settings.bpm).padStart(3, ' ').split('').map((digit, index) => (
