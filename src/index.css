@@ -326,37 +326,38 @@ button, input { font: inherit; }
 .play-pause-mark {
   position: absolute;
   pointer-events: none;
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
 }
 
 .play-pause-bars {
-  left: calc(var(--u) * 9.434);
-  top: calc(var(--u) * 8.381);
-  display: flex;
-  justify-content: space-between;
+  left: calc(var(--u) * 8.6);
+  top: calc(var(--u) * 7.703);
   width: calc(var(--u) * 12.6);
   height: calc(var(--u) * 16.768);
-}
-
-.play-pause-bars span {
-  width: calc(var(--u) * 3.392);
-  height: 100%;
   background: #d9d9d9;
+  mask-image: url("./assets/pause-decal.svg");
+  -webkit-mask-image: url("./assets/pause-decal.svg");
 }
 
-.play-pause.is-pause .play-pause-bars span {
+.play-pause.is-pause .play-pause-bars {
   background: #9c9c9c;
 }
 
 .play-pause-mark {
-  left: calc(var(--u) * 32.334);
-  top: calc(var(--u) * 8.623);
+  left: calc(var(--u) * 34.906);
+  top: calc(var(--u) * 7.896);
   width: calc(var(--u) * 14.659);
   height: calc(var(--u) * 16.284);
-  fill: #9c9c9c;
+  background: #9c9c9c;
+  mask-image: url("./assets/play-decal.svg");
+  -webkit-mask-image: url("./assets/play-decal.svg");
 }
 
 .play-pause.is-pause .play-pause-mark {
-  fill: #d9d9d9;
+  background: #d9d9d9;
 }
 
 .play-pause:focus-visible,
