@@ -31,8 +31,7 @@ import barCorner from '../assets/bar-corner.svg'
 import sliderTrack from '../assets/slider-track.svg'
 import sliderKnob from '../assets/slider-knob.svg'
 import decalLines from '../assets/decal-lines.svg'
-import powerOff from '../assets/power-off.svg'
-import powerOn from '../assets/power-on.svg'
+import { PlayPause } from './PlayPause'
 
 const SIGNATURES: TimeSignature[] = ['4/4', '3/4', '6/8']
 
@@ -326,19 +325,14 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
             />
           </div>
 
-          <button
-            type="button"
-            className="power-btn"
-            style={place(23, 872, 49, 39)}
-            aria-pressed={playing}
-            aria-label={playing ? 'Turn metronome off' : 'Turn metronome on'}
+          <PlayPause
+            playing={playing}
+            style={place(23, 875, 58, 36)}
             onClick={(event) => {
               event.stopPropagation()
               onToggle()
             }}
-          >
-            <img src={playing ? powerOn : powerOff} alt="" />
-          </button>
+          />
           <p className="sr-only" aria-live="polite">
             {signaturePending || subdivisionPending ? 'Selection applies at the next bar.' : ''}
           </p>
