@@ -295,69 +295,48 @@ button, input { font: inherit; }
 
 .play-pause {
   padding: 0;
-  border: calc(var(--u) * 1) solid transparent;
-  background:
-    linear-gradient(#000, #000) padding-box,
-    linear-gradient(to bottom, #e6e6e6, #b2b2b2) border-box;
+  border: calc(var(--u) * 1) solid #e6e6e6;
+  background: #000;
   cursor: pointer;
   z-index: 4;
   overflow: visible;
 }
 
-.play-pause-cap {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: calc(var(--u) * 54.865);
-  height: calc(var(--u) * 33.333);
-  border: calc(var(--u) * 1) solid #989493;
-  border-radius: calc(var(--u) * 3);
-  background: linear-gradient(-59.14deg, #1d1d1d 26.035%, #1a1819 75.618%);
-  box-shadow: calc(var(--u) * 1) calc(var(--u) * 4) calc(var(--u) * 6.96) rgba(0, 0, 0, 0.5);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.play-pause.is-pause .play-pause-cap {
-  border-color: #111;
-}
-
-.play-pause-bars,
-.play-pause-mark {
+.play-pause-pause,
+.play-pause-play {
   position: absolute;
   pointer-events: none;
-  mask-repeat: no-repeat;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
 }
 
-.play-pause-bars {
-  left: calc(var(--u) * 8.6);
-  top: calc(var(--u) * 7.703);
-  width: calc(var(--u) * 12.6);
-  height: calc(var(--u) * 16.768);
-  background: #d9d9d9;
-  mask-image: url("./assets/pause-decal.svg");
-  -webkit-mask-image: url("./assets/pause-decal.svg");
+.play-pause:not(.is-pause) .play-pause-pause,
+.play-pause.is-pause .play-pause-play {
+  width: calc(var(--u) * 41.92);
+  height: calc(var(--u) * 47.92);
 }
 
-.play-pause.is-pause .play-pause-bars {
-  background: #9c9c9c;
+.play-pause:not(.is-pause) .play-pause-pause {
+  left: calc(var(--u) * -5.96);
+  top: calc(var(--u) * -2.96);
 }
 
-.play-pause-mark {
-  left: calc(var(--u) * 34.906);
-  top: calc(var(--u) * 7.896);
-  width: calc(var(--u) * 14.659);
-  height: calc(var(--u) * 16.284);
-  background: #9c9c9c;
-  mask-image: url("./assets/play-decal.svg");
-  -webkit-mask-image: url("./assets/play-decal.svg");
+.play-pause.is-pause .play-pause-play {
+  left: calc(var(--u) * 22.04);
+  top: calc(var(--u) * -2.96);
 }
 
-.play-pause.is-pause .play-pause-mark {
-  background: #d9d9d9;
+.play-pause.is-pause .play-pause-pause,
+.play-pause:not(.is-pause) .play-pause-play {
+  top: 0;
+  width: calc(var(--u) * 28);
+  height: calc(var(--u) * 34);
+}
+
+.play-pause.is-pause .play-pause-pause {
+  left: 0;
+}
+
+.play-pause:not(.is-pause) .play-pause-play {
+  left: calc(var(--u) * 28);
 }
 
 .play-pause:focus-visible,
