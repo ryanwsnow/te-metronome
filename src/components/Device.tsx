@@ -327,7 +327,7 @@ export function Device({ settings, playing, onSettings, onToggle, onResume, getV
 
           <PlayPause
             playing={playing}
-            style={place(23, 875, 58, 36)}
+            style={place(30, 865, 58, 36)}
             onClick={(event) => {
               event.stopPropagation()
               onToggle()
