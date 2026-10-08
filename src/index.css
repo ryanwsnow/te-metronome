@@ -293,26 +293,73 @@ button, input { font: inherit; }
 
 .knob-mark-volume::before { background: #7b7b7b; }
 
-.power-btn {
+.play-pause {
   padding: 0;
-  border: 0;
-  background: transparent;
+  border: calc(var(--u) * 1) solid transparent;
+  background:
+    linear-gradient(#000, #000) padding-box,
+    linear-gradient(to bottom, #e6e6e6, #b2b2b2) border-box;
   cursor: pointer;
   z-index: 4;
   overflow: visible;
 }
 
-.power-btn img {
+.play-pause-cap {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: calc(var(--u) * 38.92);
-  height: calc(var(--u) * 48.92);
-  transform: translate(-50%, -50%) rotate(90deg);
+  width: calc(var(--u) * 54.865);
+  height: calc(var(--u) * 33.333);
+  border: calc(var(--u) * 1) solid #989493;
+  border-radius: calc(var(--u) * 3);
+  background: linear-gradient(-59.14deg, #1d1d1d 26.035%, #1a1819 75.618%);
+  box-shadow: calc(var(--u) * 1) calc(var(--u) * 4) calc(var(--u) * 6.96) rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
-.power-btn:focus-visible,
+.play-pause.is-pause .play-pause-cap {
+  border-color: #111;
+}
+
+.play-pause-bars,
+.play-pause-mark {
+  position: absolute;
+  pointer-events: none;
+}
+
+.play-pause-bars {
+  left: calc(var(--u) * 9.434);
+  top: calc(var(--u) * 8.381);
+  display: flex;
+  justify-content: space-between;
+  width: calc(var(--u) * 12.6);
+  height: calc(var(--u) * 16.768);
+}
+
+.play-pause-bars span {
+  width: calc(var(--u) * 3.392);
+  height: 100%;
+  background: #d9d9d9;
+}
+
+.play-pause.is-pause .play-pause-bars span {
+  background: #9c9c9c;
+}
+
+.play-pause-mark {
+  left: calc(var(--u) * 32.334);
+  top: calc(var(--u) * 8.623);
+  width: calc(var(--u) * 14.659);
+  height: calc(var(--u) * 16.284);
+  fill: #9c9c9c;
+}
+
+.play-pause.is-pause .play-pause-mark {
+  fill: #d9d9d9;
+}
+
+.play-pause:focus-visible,
 .metro:focus-visible,
 .bpm-slider:focus-visible {
   outline: calc(var(--u) * 2) solid #e22d62;
