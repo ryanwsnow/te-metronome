@@ -17,13 +17,8 @@ export function PlayPause({ playing, style, onClick }: PlayPauseProps) {
       onClick={onClick}
     >
       <span className="play-pause-cap" />
-      <span className="play-pause-bars" aria-hidden="true">
-        <span />
-        <span />
-      </span>
-      <svg className="play-pause-mark" viewBox="0 0 14.659 16.284" aria-hidden="true">
-        <path d="M0 0 L0 16.284 L14.659 8.142 Z" />
-      </svg>
+      <span className="play-pause-bars" aria-hidden="true" />
+      <span className="play-pause-mark" aria-hidden="true" />
     </button>
   )
 }
